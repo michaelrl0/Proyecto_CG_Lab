@@ -51,7 +51,7 @@ int main( )
     glfwWindowHint( GLFW_RESIZABLE, GL_FALSE );
     
     // Create a GLFWwindow object that we can use for GLFW's functions
-    GLFWwindow *window = glfwCreateWindow( WIDTH, HEIGHT, "Practica 4", nullptr, nullptr );
+    GLFWwindow *window = glfwCreateWindow( WIDTH, HEIGHT, "Proyecto Lab", nullptr, nullptr );
     
     if ( nullptr == window )
     {
@@ -92,6 +92,8 @@ int main( )
     
     // Load models
     Model sillon((char*)"Models/Sillon/sillon.obj");
+    Model sofa((char*)"Models/Sofa/sofa.obj");
+    Model mesa((char*)"Models/mesa centro/mesaC.obj");
     
     glm::mat4 projection = glm::perspective( camera.GetZoom( ), ( float )SCREEN_WIDTH/( float )SCREEN_HEIGHT, 0.1f, 100.0f );
     
@@ -118,13 +120,28 @@ int main( )
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "view"), 1, GL_FALSE, glm::value_ptr(view));
 
         // Draw the loaded model
+
+        //SE DIBUJA EL SILLÓN
         glm::mat4 model(1);
-        // La variable (float)glfwGetTime() sirve para obtener el tiempo de procesador
-        // es una manera de normalizar la velocidad
-       // model = glm::rotate(model, (float)glfwGetTime(), glm::vec3(0.0f, 1.0f, 0.0f));
+        model = glm::rotate(model, glm::radians(25.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        model = glm::translate(model, glm::vec3(-7.0f, 0.0f, 0.0f));
+        model = glm::rotate(model, glm::radians(25.0f), glm::vec3(0.0f, 1.0f, 0.0f));
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         sillon.Draw(shader);
 
+        // SE DIBUJA EL SOFÁ
+        model = glm::mat4(1);
+        model = glm::translate(model, glm::vec3(-5.0f, 0.0f, 8.0f));
+        model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        sofa.Draw(shader);
+
+        // SE DIBUJA LA MESA DE CENTRO
+        model = glm::mat4(1);
+        model = glm::translate(model, glm::vec3(-5.0f, 0.0f, 5.5f));
+        
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        mesa.Draw(shader);
 
         // Swap the buffers
         glfwSwapBuffers( window );
