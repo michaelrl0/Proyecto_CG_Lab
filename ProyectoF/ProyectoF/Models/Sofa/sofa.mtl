@@ -1,3 +1,39 @@
+newmtl _Christmas_Tree_V2_L2:Christmas_Tree
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd tree.jpg
+map_Ka tree.jpg
+Ni 1.50
+Ks 0.09 0.09 0.09
+Ns 10.00
+newmtl _Christmas_Tree_V2_L2:ball_metall
+illum 4
+Kd 0.66 0.62 0.48
+Ka 0.66 0.62 0.48
+Tf 1.00 1.00 1.00
+Ni 1.50
+Ks 0.68 0.66 0.57
+Ns 80.00
+newmtl _Christmas_Tree_V2_L2:loop
+illum 4
+Kd 0.34 0.30 0.22
+Ka 0.34 0.30 0.22
+Tf 1.00 1.00 1.00
+Ni 1.50
+Ks 0.63 0.63 0.63
+Ns 20.00
+newmtl jean_obj:fabric
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd fabric.jpg
+map_Ka fabric.jpg
+Ni 1.50
+Ks 0.00 0.00 0.00
+Ns 0.00
 newmtl jean_obj1:fabric
 illum 4
 Kd 0.00 0.00 0.00
@@ -18,13 +54,6 @@ map_Ka wood.png
 Ni 1.50
 Ks 0.00 0.00 0.00
 Ns 0.00
-newmtl lambert2SG
-illum 4
-Kd 0.00 0.00 0.00
-Ka 0.00 0.00 0.00
-Tf 1.00 1.00 1.00
-map_Kd sofa1claro.jpg
-Ni 1.00
 newmtl lambert3SG
 illum 4
 Kd 0.00 0.00 0.00
@@ -52,4 +81,46 @@ Kd 0.00 0.00 0.00
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
 map_Kd marmol.jpg
+Ni 1.00
+newmtl lambert7SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd tree.jpg
+Ni 1.00
+newmtl lambert8SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd base.png
+Ni 1.00
+newmtl lambert9SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd rojo2.png
+Ni 1.00
+newmtl lambert10SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd azul.png
+Ni 1.00
+newmtl lambert11SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd amarillo2.png
+Ni 1.00
+newmtl lambert12SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd verde.png
 Ni 1.00

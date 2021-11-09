@@ -94,6 +94,7 @@ int main( )
     Model sillon((char*)"Models/Sillon/sillon.obj");
     Model sofa((char*)"Models/Sofa/sofa.obj");
     Model mesa((char*)"Models/mesa centro/mesaC.obj");
+    Model arbol((char*)"Models/Arbol/arbol.obj");
     
     glm::mat4 projection = glm::perspective( camera.GetZoom( ), ( float )SCREEN_WIDTH/( float )SCREEN_HEIGHT, 0.1f, 100.0f );
     
@@ -138,10 +139,15 @@ int main( )
 
         // SE DIBUJA LA MESA DE CENTRO
         model = glm::mat4(1);
-        model = glm::translate(model, glm::vec3(-5.0f, 0.0f, 5.5f));
-        
+        model = glm::translate(model, glm::vec3(-5.0f, 0.0f, 5.5f));        
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         mesa.Draw(shader);
+
+        //SE DIBUJA EL ÁRBOL DE NAVIDAD
+        model = glm::mat4(1);
+        model = glm::translate(model, glm::vec3(-10.0f, 0.0f, 7.5f));
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        arbol.Draw(shader);
 
         // Swap the buffers
         glfwSwapBuffers( window );
