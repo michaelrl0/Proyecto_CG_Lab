@@ -50,10 +50,10 @@ bool active4;
 
 // Positions of the point lights
 glm::vec3 pointLightPositions[] = {
-	glm::vec3(0.0f,0.5f,0.0f),
-	glm::vec3(10.0f,0.5f,0.0f),
-	glm::vec3(20.0f,0.5f,0.0f),
-	glm::vec3(30.0f,0.5f,0.0f)
+	glm::vec3(0.0f,10.0f,0.0f),
+	glm::vec3(0.0f,10.0f,0.0f),
+	glm::vec3(0.0f,10.0f,0.0f),
+	glm::vec3(0.0f,10.0f,0.0f)
 };
 
 glm::vec3 Light1 = glm::vec3(0);
@@ -131,6 +131,9 @@ int main()
 	Model Sofa((char*)"Models/Sofa/sofa.obj");
 	Model Piso((char*)"Models/Piso/Piso_casa.obj");
 	Model MesaC((char*)"Models/mesa centro/mesaC.obj");
+	Model Chim((char*)"Models/Chimenea/chime.obj");
+	Model ParedT((char*)"Models/Paredes/paredT.obj");
+	Model Paredizq((char*)"Models/Paredes/paredIzq.obj");
 
 
 	// Set texture units
@@ -167,9 +170,9 @@ int main()
 
 		// Directional light
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.direction"), -0.2f, -1.0f, -0.3f);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.ambient"), 0.3f,0.3f,0.3f);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.diffuse"), 0.3f, 0.3f, 0.3f);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.specular"), 0.5f, 0.5f, 0.5f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.ambient"), 0.4f, 0.4f,0.4f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.diffuse"), 0.2f, 0.2f, 0.2f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.specular"), 0.0f, 0.0f, 0.0f);
 
 
 		// Point light 1 (AZUL)
@@ -276,32 +279,53 @@ int main()
 		//SE CARGAN LOS MODELOS
         view = camera.GetViewMatrix();	
 		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(-5.0f, 0.0f, 8.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Piso.Draw(lightingShader);
+
+		model = glm::mat4(1);
+		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(0.0f, -0.12f, -6.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Chim.Draw(lightingShader);
+
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(-5.0f, 0.0f, 4.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Arbol.Draw(lightingShader);
+
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(-1.0f, 0.0f, 3.5f));
 		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
 		Sofa.Draw(lightingShader);
 		
 		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(-10.0f, 0.0f, 7.5f));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		Arbol.Draw(lightingShader);
-
-		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(-5.0f, 0.0f, 5.5f));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		Piso.Draw(lightingShader);
-
-		model = glm::mat4(1);
-		model = glm::rotate(model, glm::radians(25.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::translate(model, glm::vec3(-7.0f, 0.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(-3.5f, 0.0f, -3.5f));
 		model = glm::rotate(model, glm::radians(25.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Sillon.Draw(lightingShader);
 
 		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(-5.0f, 0.0f, 5.5f));
+		model = glm::translate(model, glm::vec3(-1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		MesaC.Draw(lightingShader);
+
+		//Se cargan las paredes blancas
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(-7.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Paredizq.Draw(lightingShader);
+
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(7.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Paredizq.Draw(lightingShader);
+
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -6.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		ParedT.Draw(lightingShader);
+
 		glEnable(GL_BLEND);
     	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		////FOCO AZUL
