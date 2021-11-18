@@ -150,8 +150,6 @@
   <ItemGroup>
     <None Include="Shaders\lighting.frag" />
     <None Include="Shaders\lighting.vs" />
-    <None Include="Shaders\modelLoading.frag" />
-    <None Include="Shaders\modelLoading.vs" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Mesh.h" />
