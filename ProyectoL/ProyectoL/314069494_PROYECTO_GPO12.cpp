@@ -157,7 +157,11 @@ int main()
 	Model brazo1((char*)"Models/Snowman/brazo1.obj");
 	Model brazo2((char*)"Models/Snowman/brazo2.obj");
 	//Carro
-	Model carro((char*)"Models/Carro/llanta.obj");
+	Model carroceria((char*)"Models/Carro/carroceria.obj");
+	Model llanta1((char*)"Models/Carro/llanta1.obj");
+	Model llanta2((char*)"Models/Carro/llanta2.obj");
+	Model llanta3((char*)"Models/Carro/llanta3.obj");
+	Model llanta4((char*)"Models/Carro/llanta4.obj");
 
 	// Set texture units
 	lightingShader.Use();
@@ -473,9 +477,29 @@ int main()
 		
 		// carro
 		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(-0.5f, 1.0f, 12.0f));
+		//model = glm::translate(model, glm::vec3(-0.5f, 1.0f, 12.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		carro.Draw(lightingShader);
+		carroceria.Draw(lightingShader);
+
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(-0.5f, 0.0f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		llanta1.Draw(lightingShader);
+
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(0.5f, 0.0f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		llanta2.Draw(lightingShader);
+
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(-1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		llanta3.Draw(lightingShader);
+
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		llanta4.Draw(lightingShader);
 
 		//Se cargan las paredes blancas y ventanas
 		model = glm::mat4(1);
