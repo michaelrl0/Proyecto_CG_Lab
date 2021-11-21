@@ -43,17 +43,45 @@ float range = 0.0f;
 float spotAngle = 0.0f;
 // Light attributes
 glm::vec3 lightPos(0.0f, 0.0f, 0.0f);
-bool active;
-bool active2;
-bool active3;
-bool active4;
 
-// Positions of the point lights
+// Variables para encender el arbol
+bool esfera1,
+esfera2,
+esfera3,
+esfera4,
+estrella;
+
+float contador = 0.0f;
+
+// Variables para animación de carrito
+bool animaCarro = false,
+recorrido1 = true,
+recorrido2 = false,
+recorrido3 = false,
+recorrido4 = false;
+
+float posicion = 0.0f,
+girollanta = 0.0f,
+rotacioncarro = 0.0f,
+movx = 0.0f,
+movz = 0.0f;
+
+// Variables para animación del snowman
+bool animaSnow = false,
+mov1 = true,
+mov2 = false,
+mov3 = false,
+mov4 = false;
+
+float rotacion1 = 0.0f,
+rotacion2 = 0.0f;
+
+// Posiciones para las luces del arbol
 glm::vec3 pointLightPositions[] = {
-	glm::vec3(0.0f,10.0f,0.0f),
-	glm::vec3(0.0f,10.0f,0.0f),
-	glm::vec3(0.0f,10.0f,0.0f),
-	glm::vec3(0.0f,10.0f,0.0f)
+	glm::vec3(-4.159f, 1.064f, 4.362f),
+	glm::vec3(-4.438f, 1.156f, 3.272f),
+	glm::vec3(-4.554f, 2.203f, 4.208f),
+	glm::vec3(0.0f,20.0f,0.0f)
 };
 
 glm::vec3 Light1 = glm::vec3(0);
@@ -158,10 +186,8 @@ int main()
 	Model brazo2((char*)"Models/Snowman/brazo2.obj");
 	//Carro
 	Model carroceria((char*)"Models/Carro/carroceria.obj");
-	Model llanta1((char*)"Models/Carro/llanta1.obj");
-	Model llanta2((char*)"Models/Carro/llanta2.obj");
-	Model llanta3((char*)"Models/Carro/llanta3.obj");
-	Model llanta4((char*)"Models/Carro/llanta4.obj");
+	Model llanta((char*)"Models/Carro/llanta.obj");
+	
 
 	// Set texture units
 	lightingShader.Use();
@@ -197,12 +223,12 @@ int main()
 
 		// Directional light
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.direction"), -0.2f, -1.0f, -0.3f);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.ambient"), 0.4f, 0.4f,0.4f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.ambient"), 0.4f, 0.4f, 0.4f);
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.diffuse"), 0.2f, 0.2f, 0.2f);
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.specular"), 0.0f, 0.0f, 0.0f);
 
 
-		// Point light 1 (AZUL)
+		// Point light 1: Luz azul
 	    glm::vec3 lightColor;
 		lightColor.x = abs(sin(glfwGetTime() * Light1.x));
 		lightColor.y = abs(sin(glfwGetTime() * Light1.y));
@@ -212,13 +238,13 @@ int main()
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[0].position"), pointLightPositions[0].x, pointLightPositions[0].y, pointLightPositions[0].z);
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[0].ambient"), lightColor.x, lightColor.y, lightColor.z);
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[0].diffuse"), lightColor.x, lightColor.y, lightColor.z);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[0].specular"), 0.0f, 0.0f, 1.0f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[0].specular"), 0.0f, 0.0f, 0.2f);
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[0].constant"), 1.0f);
-		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[0].linear"), 0.03f);
-		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[0].quadratic"), 0.1f);
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[0].linear"), 0.02f);
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[0].quadratic"), 3.0f);
 
 
-		// Point light 2 (VERDE)
+		// Point light 2: Luz verde
 		glm::vec3 lightColor2;
 		lightColor2.x = abs(sin(glfwGetTime() * Light2.x));
 		lightColor2.y = abs(sin(glfwGetTime() * Light2.y));
@@ -229,13 +255,13 @@ int main()
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[1].position"), pointLightPositions[1].x, pointLightPositions[1].y, pointLightPositions[1].z);
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[1].ambient"), lightColor2.x, lightColor2.y, lightColor2.z);
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[1].diffuse"), lightColor2.x, lightColor2.y, lightColor2.z);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[1].specular"), 0.0f, 1.0f, 0.0f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[1].specular"), 0.0f, 0.2f, 0.0f);
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[1].constant"), 1.0f);
 		// la cuadratica entre más cercana sea a linear, entonces mas iluminación se tendrá alrededor del punto
-		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[1].linear"), 0.03f);
-		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[1].quadratic"), 0.1f);
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[1].linear"), 0.02f);
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[1].quadratic"), 3.0f);
 
-		// Point light 3 (AMARILLO)
+		// Point light 3: Luz amarilla
 		glm::vec3 lightColor3;
 		lightColor3.x = abs(sin(glfwGetTime() * Light3.x));
 		lightColor3.y = abs(sin(glfwGetTime() * Light3.y));
@@ -245,10 +271,10 @@ int main()
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[2].position"), pointLightPositions[2].x, pointLightPositions[2].y, pointLightPositions[2].z);
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[2].ambient"), lightColor3.x, lightColor3.y, lightColor3.z);
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[2].diffuse"), lightColor3.x, lightColor3.y, lightColor3.z);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[2].specular"), 1.0f, 1.0f, 0.0f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[2].specular"), 0.2f, 0.2f, 0.0f);
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[2].constant"), 1.0f);
-		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[2].linear"), 0.03f);
-		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[2].quadratic"), 0.1f);
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[2].linear"), 0.02f);
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[2].quadratic"), 1.0f);
 
 		// Point light 4 (ROJO)
 		glm::vec3 lightColor4;
@@ -268,12 +294,12 @@ int main()
 		// SpotLight
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "spotLight.position"), posicionSP.x, posicionSP.y, posicionSP.z);
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "spotLight.direction"), direccionSP.x, direccionSP.y, direccionSP.z);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "spotLight.ambient"), 1.0f, 1.0f, 1.0f);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "spotLight.diffuse"), 1.0f, 1.0f, 1.0f);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "spotLight.specular"),0.1f, 0.1f, 0.1f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "spotLight.ambient"), 0.0f, 0.0f, 0.0f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "spotLight.diffuse"), 0.0f, 0.0f, 0.0f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "spotLight.specular"),0.0f, 0.0f, 0.0f);
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "spotLight.constant"), 1.0f);
-		glUniform1f(glGetUniformLocation(lightingShader.Program, "spotLight.linear"), 0.01f);
-		glUniform1f(glGetUniformLocation(lightingShader.Program, "spotLight.quadratic"), 0.1f);
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "spotLight.linear"), 0.0f);
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "spotLight.quadratic"), 0.0f);
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "spotLight.cutOff"), glm::cos(glm::radians(10.0f)));
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "spotLight.outerCutOff"), glm::cos(glm::radians(15.0f)));
 
@@ -302,6 +328,7 @@ int main()
 		//SE CARGAN LOS MODELOS
         view = camera.GetViewMatrix();	
 		model = glm::mat4(1);
+		model = glm::scale(model, glm::vec3(1.0f, 0.01f, 1.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Piso.Draw(lightingShader);
 
@@ -361,7 +388,7 @@ int main()
 		Sillon.Draw(lightingShader);
 
 		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(-1.0f, 0.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(-1.0f, 0.0f, 0.05f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		MesaC.Draw(lightingShader);
 
@@ -477,30 +504,48 @@ int main()
 		
 		// carro
 		model = glm::mat4(1);
-		//model = glm::translate(model, glm::vec3(-0.5f, 1.0f, 12.0f));
+		model = glm::translate(model, glm::vec3(-4.0f+movx, 0.0f, 3.0f+movz));
+		model = glm::rotate(model, glm::radians(rotacioncarro), glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		carroceria.Draw(lightingShader);
 
+		// llanta derecha delantera
 		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(-0.5f, 0.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(-3.936f+movx, 0.0f, 2.9f+movz));
+		model = glm::rotate(model, glm::radians(rotacioncarro), glm::vec3(0.0f, 1.0f, 0.0f));
+		//model = glm::translate(model, glm::vec3(-1.5f, 0.33f, 0.75f));
+		model = glm::rotate(model, glm::radians(girollanta), glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		llanta1.Draw(lightingShader);
-
+		llanta.Draw(lightingShader);
+		
+		// llanta izq delantera
 		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(0.5f, 0.0f, 0.0f));
+		//model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(-4.059f+movx, 0.0f, 2.9f+movz));
+		model = glm::rotate(model, glm::radians(rotacioncarro), glm::vec3(0.0f, 1.0f, 0.0f));
+		//model = glm::translate(model, glm::vec3(0.01f, 0.33f, 0.75f));
+		model = glm::rotate(model, glm::radians(girollanta), glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		llanta2.Draw(lightingShader);
-
+		llanta.Draw(lightingShader);
+		
+		// llanta derecha trasera
 		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(-1.0f, 0.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(-3.936f+movx, 0.0f, 3.108+movz));
+		model = glm::rotate(model, glm::radians(rotacioncarro), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(girollanta), glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		llanta3.Draw(lightingShader);
-
+		llanta.Draw(lightingShader);
+		
+		// llanta izq trasera
 		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(1.0f, 0.0f, 0.0f));
+		//model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(-4.063f+movx, 0.0f, 3.108f+movz));
+		model = glm::rotate(model, glm::radians(rotacioncarro), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(girollanta), glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		llanta4.Draw(lightingShader);
-
+		llanta.Draw(lightingShader);
+		//------------------------------------------------------------------
+	
 		//Se cargan las paredes blancas y ventanas
 		model = glm::mat4(1);
 		model = glm::translate(model, glm::vec3(-7.0f, 0.0f, 0.0f));
@@ -678,87 +723,171 @@ void DoMovement()
 	if (keys[GLFW_KEY_W] || keys[GLFW_KEY_UP])
 	{
 		camera.ProcessKeyboard(FORWARD, deltaTime);
-
 	}
 
 	if (keys[GLFW_KEY_S] || keys[GLFW_KEY_DOWN])
 	{
 		camera.ProcessKeyboard(BACKWARD, deltaTime);
-
-
 	}
 
 	if (keys[GLFW_KEY_A] || keys[GLFW_KEY_LEFT])
 	{
 		camera.ProcessKeyboard(LEFT, deltaTime);
-
-
 	}
 
 	if (keys[GLFW_KEY_D] || keys[GLFW_KEY_RIGHT])
 	{
 		camera.ProcessKeyboard(RIGHT, deltaTime);
-
-
-	}
-	//POSICIÓN DE LA SPOTLIGHT
-	//MOVER EN X
-	if (keys[GLFW_KEY_T])
-	{
-		posicionSP.x += 0.01f;
-	}
-	if (keys[GLFW_KEY_G])
-	{
-		posicionSP.x -= 0.01f;
-	}
-	//MOVER EN Y
-	if (keys[GLFW_KEY_Y])
-	{
-		posicionSP.y += 0.01f;
 	}
 
-	if (keys[GLFW_KEY_H])
+	//Animación para el carro
+	if (animaCarro)
 	{
-		posicionSP.y -= 0.01f;
-	}
-	// MOVER EN Z
-	if (keys[GLFW_KEY_U])
-	{
-		posicionSP.z += 0.01f;
-	}
-	if (keys[GLFW_KEY_J])
-	{
-		posicionSP.z -= 0.01f;
-	}
-	// DIRECCION DE LA SPOTLIGHT
-	//MOVER EN X
-	if (keys[GLFW_KEY_C])
-	{
-		direccionSP.x += 0.01f;
-	}
-	if (keys[GLFW_KEY_V])
-	{
-		direccionSP.x -= 0.01f;
-	}
-	//MOVER EN Y
-	if (keys[GLFW_KEY_R])
-	{
-		direccionSP.y += 0.01f;
+		if (recorrido1)
+		{
+			if (movz < -6.5f)
+			{
+				recorrido1 = false;
+				recorrido2 = true;
+				rotacioncarro = -90.0f;
+			}
+			else
+			{
+				girollanta += 0.1f;
+				movz -= 0.01f;;
+			}
+		}
+
+		if (recorrido2)
+		{
+			if (movx > 9.0f)
+			{
+				recorrido2 = false;
+				recorrido3 = true;
+				rotacioncarro = -180.0f;
+			}
+			else
+			{
+				girollanta += 0.1f;
+				movx += 0.01f;
+			}
+		}
+
+		if (recorrido3)
+		{
+			if (movz > 0.5f)
+			{
+				recorrido3 = false;
+				recorrido4 = true;
+				rotacioncarro = -270.0f;
+			}
+			else
+			{
+				girollanta += 0.1f;
+				movz += 0.01f;
+			}
+		}
+
+
+		if (recorrido4)
+		{
+			if (movx < -0.05f)
+			{
+				recorrido4 = false;
+				recorrido1 = true;
+				rotacioncarro = -360.0f;
+			}
+			else
+			{
+				movx -= 0.01f;
+			}
+		}
 	}
 
-	if (keys[GLFW_KEY_F])
+	if (animaSnow)
 	{
-		direccionSP.y -= 0.01f;
+		if (mov1)
+		{
+
+		}
 	}
-	// MOVER EN Z
-	if (keys[GLFW_KEY_N])
+
+	// Luz azul
+	if (esfera1)
 	{
-		direccionSP.z += 0.01f;
+		contador += 0.01f;
+		if (contador < abs(sin(glfwGetTime() * Light1.x))
+		{
+			Light1 = glm::vec3(0.0f, 0.0f, 0.7f);
+		}
+		else 
+		{
+			Light1 = glm::vec3(0);
+		}
+		if (abs(sin(glfwGetTime() * Light1.x) < contador < 2.0f)
+		{
+			Light2 = glm::vec3(0.0f, 0.7f, 0.0f);
+		}
+		else
+		{
+			Light2 = glm::vec3(0);
+		}
+		if (2.0f < contador < 3.0f)
+		{
+			Light3 = glm::vec3(0.7f, 0.7f, 0.0f);
+		}
+		else
+		{
+			Light3 = glm::vec3(0);
+		}
+		if (3.0f < contador < 4.0f)
+		{
+			Light4 = glm::vec3(0.7f, 0.0f, 0.0f);
+		}
+		else
+		{
+			Light4 = glm::vec3(0);
+		}
+		contador = 0.0f;
 	}
-	if (keys[GLFW_KEY_M])
-	{
-		direccionSP.z -= 0.01f;
-	}
+	//else
+	//{
+	//	Light1 = glm::vec3(0);
+	//}
+	//	// Luz verde
+	//if (esfera2)
+	//{
+	//	//Light1 = glm::vec3(0);
+	//	Light2 = glm::vec3(0.0f, 0.7f, 0.0f);
+	//	esfera3 = !esfera3;
+	//}
+	//else
+	//{ 
+	//	Light2 = glm::vec3(0);
+	//}
+
+	//// Luz amarilla
+	//if (esfera3)
+	//{
+	//	//Light2 = glm::vec3(0);
+	//	Light3 = glm::vec3(0.7f, 0.7f, 0.0f);
+	//	esfera4 = !esfera4;
+	//}
+	//else
+	//{
+	//	Light3 = glm::vec3(0);
+	//}
+
+	////Luz roja
+	//if (esfera4)
+	//{
+	//	//Light3 = glm::vec3(0);
+	//	Light4 = glm::vec3(0.7f, 0.0f, 0.0f);
+	//}
+	//else
+	//{
+	//	Light4 = glm::vec3(0);
+	//}
 	
 }
 
@@ -781,58 +910,23 @@ void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mode
 			keys[key] = false;
 		}
 	}
-	// Azul
+	
+	// tecla SPACE para activar las luces del arbol
 	if (keys[GLFW_KEY_SPACE])
 	{
-		active = !active;
-		if (active)
-		{
-			Light1 = glm::vec3(0.0f, 0.0f, 0.7f);
-		}
-		else
-		{
-			Light1 = glm::vec3(0);
-		}
-	}
-	//Verde
-	if (keys[GLFW_KEY_SPACE])
-	{
-		active2 = !active2;
-		if (active2)
-		{
-			Light2 = glm::vec3(0.0f, 0.7f, 0.0f);
-		}
-		else
-		{
-			Light2 = glm::vec3(0);
-		}
-	}
-	//Amarillo
-	if (keys[GLFW_KEY_SPACE])
-	{
-		active3 = !active3;
-		if (active3)
-		{
-			Light3 = glm::vec3(0.7f, 0.7f, 0.0f);
-		}
-		else
-		{
-			Light3 = glm::vec3(0);
-		}
+		esfera1 = !esfera1;
 	}
 
-	//Rojo
-	if (keys[GLFW_KEY_SPACE])
+	// tecla C para activar la animación del carro
+	if (keys[GLFW_KEY_C])
 	{
-		active4 = !active4;
-		if (active4)
-		{
-			Light4 = glm::vec3(0.7f, 0.0f, 0.0f);
-		}
-		else
-		{
-			Light4 = glm::vec3(0);
-		}
+		animaCarro = !animaCarro;
+	}
+
+	// tecla N para activa la animación del snowman
+	if (keys[GLFW_KEY_N])
+	{
+		animaSnow = !animaSnow;
 	}
 }
 
