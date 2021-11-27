@@ -70,7 +70,8 @@ movz = 0.0f;
 bool animaSnow = false,
 mov1 = true,
 mov2 = false,
-mov3 = false;
+mov3 = false,
+mov4 = false;
 
 float mov_brazo1 = 0.0f,
 mov_brazo2 = 0.0f,
@@ -346,20 +347,20 @@ int main()
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		pasto_nieve.Draw(lightingShader);
 
-		model = glm::mat4(1);
+		/*model = glm::mat4(1);
 		model = glm::translate(model, glm::vec3(11.0f, 0.0f, -3.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		pasto_nieve3.Draw(lightingShader);
+		pasto_nieve3.Draw(lightingShader);*/
 
-		model = glm::mat4(1);
+		/*model = glm::mat4(1);
 		model = glm::translate(model, glm::vec3(-4.91f, 0.0f, -9.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		pasto_nieve4.Draw(lightingShader);
+		pasto_nieve4.Draw(lightingShader);*/
 
-		model = glm::mat4(1);
+		/*model = glm::mat4(1);
 		model = glm::translate(model, glm::vec3(-12.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		pasto_nieve5.Draw(lightingShader);
+		pasto_nieve5.Draw(lightingShader);*/
 
 		model = glm::mat4(1);
 		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
@@ -485,6 +486,7 @@ int main()
 
 		model = glm::mat4(1);
 		model = glm::translate(model, glm::vec3(0.0f, 2.05f+salto, 12.0f));
+		//model = glm::rotate(model, glm::radians(-60.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		sombrero.Draw(lightingShader);
 
@@ -790,40 +792,41 @@ void DoMovement()
 			}
 			else
 			{
-				mov_brazo1 += 0.1f;
-				mov_brazo2 -= 0.1f;
+				mov_brazo1 += 1.0f;
+				mov_brazo2 -= 1.0f;
 			}
 		}
 		// Salto del muñeco de nieve
 		if (mov2)
 		{
-			if (salto > 0.05f && mov_brazo1 < -60.0f && mov_brazo2 > 60.0f)
+			if (salto > 1.0f && (mov_brazo1 < -70.0f && mov_brazo2 > 70.0f))
 			{
 				mov2 = false;
 				mov3 = true;
 			}
 			else
 			{
-				salto += 0.03f;
+				salto += 0.04f;
 				mov_brazo1 -= 1.0f;
 				mov_brazo2 += 1.0f;
 			}
 		}
-		// Caida del muñeco de nieve
-		/*if (mov3)
+
+		//Caida del muñeco de nieve
+		if (mov3)
 		{
-			if (salto < -0.05f && mov_brazo1 > 15.0f && mov_brazo2 < -15.0f)
+			if (salto < 0.0f)
 			{
 				mov3 = false;
-			}	
+				mov1 = true;
+			}
+			else 
+			{
+				salto -= 0.04f;
+				mov_brazo1 += 1.0f;
+				mov_brazo2 -= 1.0f;
+			}
 		}
-		else
-		{
-			salto -= 0.02f;
-			mov_brazo1 += 1.0f;
-			mov_brazo2 -= 1.0f;
-		}*/
-
 	}
 
 	// Luz azul
