@@ -23,6 +23,7 @@
 #include "Shader.h"
 #include "Camera.h"
 #include "Model.h"
+#include "Texture.h"
 
 // Function prototypes
 void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mode);
@@ -76,6 +77,31 @@ mov4 = false;
 float mov_brazo1 = 0.0f,
 mov_brazo2 = 0.0f,
 salto = 0.0f;
+
+// Variables para animación del helicoptero
+bool animaH = false,
+movh1 = true,
+movh2 = false,
+movh3 = false,
+movh4 = false,
+movh5 = false,
+movh6 = false,
+movh7 = false,
+movh8 = false,
+movh9 = false,
+movh10 = false,
+movh11 = false,
+movh12 = false,
+movh13 = false,
+movh14 = false;
+
+float elevar = 0.0f,
+rot_heli = 0.0f,
+rot_cuerpo = 0.0f,
+mov_cuerpoX = 0.0f,
+mov_cuerpoZ = 0.0f,
+mov_heliX = 0.0f,
+mov_heliZ = 0.0f;
 
 // Posiciones para las luces del arbol
 glm::vec3 pointLightPositions[] = {
@@ -153,6 +179,7 @@ int main()
 
 	Shader lightingShader("Shaders/lighting.vs", "Shaders/lighting.frag");
 	Shader lampShader("Shaders/lamp.vs", "Shaders/lamp.frag");
+	Shader SkyBoxshader("Shaders/SkyBox.vs", "Shaders/SkyBox.frag");
 	
 	Model Sillon((char*)"Models/Sillon/sillon.obj");
 	Model Arbol((char*)"Models/Arbol/arbol.obj");
@@ -160,40 +187,229 @@ int main()
 	Model Piso((char*)"Models/Piso/Piso_casa.obj");
 	Model MesaC((char*)"Models/mesa centro/mesaC.obj");
 	Model Chim((char*)"Models/Chimenea/chime.obj");
-	Model ParedT((char*)"Models/Paredes/paredT.obj");
-	Model Paredizq((char*)"Models/Paredes/paredIzq.obj");
 	Model Ventana((char*)"Models/Ventana/ventana.obj");
 	Model Puerta((char*)"Models/Puerta/puerta.obj");
-	Model ParedF((char*)"Models/Paredes/paredFrontal.obj");
+	Model Paredes((char*)"Models/Paredes/paredes.obj");
 	Model Techo1((char*)"Models/Paredes/techo1.obj");
 	Model Techo2((char*)"Models/Paredes/techo2.obj");
 	Model Techo3((char*)"Models/Paredes/techo3.obj");
 	Model Techo4((char*)"Models/Paredes/techo4.obj");
+	Model Techo5((char*)"Models/Paredes/techo5.obj");
 	Model Columna((char*)"Models/Paredes/columna.obj");
+	Model Pasto((char*)"Models/Piso/pasto.obj");
 	Model piso_piedra((char*)"Models/Piso/piso_piedra.obj");
-	Model pasto_nieve((char*)"Models/Piso/pasto_nieve1.obj");
-	Model pasto_nieve3((char*)"Models/Piso/piso_pasto3.obj");
-	Model pasto_nieve4((char*)"Models/Piso/pasto_nieve4.obj");
-	Model pasto_nieve5((char*)"Models/Piso/pasto_nieve5.obj");
 	Model Bota1((char*)"Models/Botas/bota1.obj");
 	Model Bota2((char*)"Models/Botas/bota2.obj");
 	Model Bota3((char*)"Models/Botas/bota3.obj");
 	Model baston((char*)"Models/Baston/baston.obj");
+	Model Cama((char*)"Models/Cama/cama.obj");
+	Model Desk((char*)"Models/Desk/desk.obj");
+	Model Lampara((char*)"Models/Desk/lampara.obj");
+	Model Repisa((char*)"Models/Desk/repisa.obj");
+	Model Silla((char*)"Models/Silla/silla.obj");
+	Model Libro((char*)"Models/Desk/libro.obj");
 	// Snowman
 	Model cuerpo((char*)"Models/Snowman/cuerpo.obj");
 	Model cabeza((char*)"Models/Snowman/cabeza.obj");
 	Model sombrero((char*)"Models/Snowman/sombrero.obj");
 	Model brazo1((char*)"Models/Snowman/brazo1.obj");
 	Model brazo2((char*)"Models/Snowman/brazo2.obj");
+
 	//Carro
 	Model carroceria((char*)"Models/Carro/carroceria.obj");
 	Model llanta((char*)"Models/Carro/llanta.obj");
-	
+	Model Trailer((char*)"Models/Trailer/trailer.obj");
+	Model Llanta1((char*)"Models/Trailer/llanta1.obj");
+	Model Llanta2((char*)"Models/Trailer/llanta2.obj");
+	Model Llanta3((char*)"Models/Trailer/llanta3.obj");
+	Model Llanta4((char*)"Models/Trailer/llanta4.obj");
+
+	// helicoptero
+	Model Cuerpo((char*)"Models/Helicopter/cuerpo.obj");
+	Model Helice((char*)"Models/Helicopter/helice.obj");
 
 	// Set texture units
 	lightingShader.Use();
 	glUniform1i(glGetUniformLocation(lightingShader.Program, "diffuse"), 0);
 	glUniform1i(glGetUniformLocation(lightingShader.Program, "specular"), 1);
+
+	GLfloat vertices[] =
+	{
+		// Positions            // Normals              // Texture Coords
+		-0.5f, -0.5f, -0.5f,    0.0f,  0.0f, -1.0f,     0.0f,  0.0f,
+		0.5f, -0.5f, -0.5f,     0.0f,  0.0f, -1.0f,     1.0f,  0.0f,
+		0.5f,  0.5f, -0.5f,     0.0f,  0.0f, -1.0f,     1.0f,  1.0f,
+		0.5f,  0.5f, -0.5f,     0.0f,  0.0f, -1.0f,     1.0f,  1.0f,
+		-0.5f,  0.5f, -0.5f,    0.0f,  0.0f, -1.0f,     0.0f,  1.0f,
+		-0.5f, -0.5f, -0.5f,    0.0f,  0.0f, -1.0f,     0.0f,  0.0f,
+
+		-0.5f, -0.5f,  0.5f,    0.0f,  0.0f,  1.0f,     0.0f,  0.0f,
+		0.5f, -0.5f,  0.5f,     0.0f,  0.0f,  1.0f,     1.0f,  0.0f,
+		0.5f,  0.5f,  0.5f,     0.0f,  0.0f,  1.0f,     1.0f,  1.0f,
+		0.5f,  0.5f,  0.5f,     0.0f,  0.0f,  1.0f,  	1.0f,  1.0f,
+		-0.5f,  0.5f,  0.5f,    0.0f,  0.0f,  1.0f,     0.0f,  1.0f,
+		-0.5f, -0.5f,  0.5f,    0.0f,  0.0f,  1.0f,     0.0f,  0.0f,
+
+		-0.5f,  0.5f,  0.5f,    -1.0f,  0.0f,  0.0f,    1.0f,  0.0f,
+		-0.5f,  0.5f, -0.5f,    -1.0f,  0.0f,  0.0f,    1.0f,  1.0f,
+		-0.5f, -0.5f, -0.5f,    -1.0f,  0.0f,  0.0f,    0.0f,  1.0f,
+		-0.5f, -0.5f, -0.5f,    -1.0f,  0.0f,  0.0f,    0.0f,  1.0f,
+		-0.5f, -0.5f,  0.5f,    -1.0f,  0.0f,  0.0f,    0.0f,  0.0f,
+		-0.5f,  0.5f,  0.5f,    -1.0f,  0.0f,  0.0f,    1.0f,  0.0f,
+
+		0.5f,  0.5f,  0.5f,     1.0f,  0.0f,  0.0f,     1.0f,  0.0f,
+		0.5f,  0.5f, -0.5f,     1.0f,  0.0f,  0.0f,     1.0f,  1.0f,
+		0.5f, -0.5f, -0.5f,     1.0f,  0.0f,  0.0f,     0.0f,  1.0f,
+		0.5f, -0.5f, -0.5f,     1.0f,  0.0f,  0.0f,     0.0f,  1.0f,
+		0.5f, -0.5f,  0.5f,     1.0f,  0.0f,  0.0f,     0.0f,  0.0f,
+		0.5f,  0.5f,  0.5f,     1.0f,  0.0f,  0.0f,     1.0f,  0.0f,
+
+		-0.5f, -0.5f, -0.5f,    0.0f, -1.0f,  0.0f,     0.0f,  1.0f,
+		0.5f, -0.5f, -0.5f,     0.0f, -1.0f,  0.0f,     1.0f,  1.0f,
+		0.5f, -0.5f,  0.5f,     0.0f, -1.0f,  0.0f,     1.0f,  0.0f,
+		0.5f, -0.5f,  0.5f,     0.0f, -1.0f,  0.0f,     1.0f,  0.0f,
+		-0.5f, -0.5f,  0.5f,    0.0f, -1.0f,  0.0f,     0.0f,  0.0f,
+		-0.5f, -0.5f, -0.5f,    0.0f, -1.0f,  0.0f,     0.0f,  1.0f,
+
+		-0.5f,  0.5f, -0.5f,    0.0f,  1.0f,  0.0f,     0.0f,  1.0f,
+		0.5f,  0.5f, -0.5f,     0.0f,  1.0f,  0.0f,     1.0f,  1.0f,
+		0.5f,  0.5f,  0.5f,     0.0f,  1.0f,  0.0f,     1.0f,  0.0f,
+		0.5f,  0.5f,  0.5f,     0.0f,  1.0f,  0.0f,     1.0f,  0.0f,
+		-0.5f,  0.5f,  0.5f,    0.0f,  1.0f,  0.0f,     0.0f,  0.0f,
+		-0.5f,  0.5f, -0.5f,    0.0f,  1.0f,  0.0f,     0.0f,  1.0f
+	};
+
+
+	GLfloat skyboxVertices[] = {
+		// Positions
+		-1.0f,  1.0f, -1.0f,
+		-1.0f, -1.0f, -1.0f,
+		1.0f, -1.0f, -1.0f,
+		1.0f, -1.0f, -1.0f,
+		1.0f,  1.0f, -1.0f,
+		-1.0f,  1.0f, -1.0f,
+
+		-1.0f, -1.0f,  1.0f,
+		-1.0f, -1.0f, -1.0f,
+		-1.0f,  1.0f, -1.0f,
+		-1.0f,  1.0f, -1.0f,
+		-1.0f,  1.0f,  1.0f,
+		-1.0f, -1.0f,  1.0f,
+
+		1.0f, -1.0f, -1.0f,
+		1.0f, -1.0f,  1.0f,
+		1.0f,  1.0f,  1.0f,
+		1.0f,  1.0f,  1.0f,
+		1.0f,  1.0f, -1.0f,
+		1.0f, -1.0f, -1.0f,
+
+		-1.0f, -1.0f,  1.0f,
+		-1.0f,  1.0f,  1.0f,
+		1.0f,  1.0f,  1.0f,
+		1.0f,  1.0f,  1.0f,
+		1.0f, -1.0f,  1.0f,
+		-1.0f, -1.0f,  1.0f,
+
+		-1.0f,  1.0f, -1.0f,
+		1.0f,  1.0f, -1.0f,
+		1.0f,  1.0f,  1.0f,
+		1.0f,  1.0f,  1.0f,
+		-1.0f,  1.0f,  1.0f,
+		-1.0f,  1.0f, -1.0f,
+
+		-1.0f, -1.0f, -1.0f,
+		-1.0f, -1.0f,  1.0f,
+		1.0f, -1.0f, -1.0f,
+		1.0f, -1.0f, -1.0f,
+		-1.0f, -1.0f,  1.0f,
+		1.0f, -1.0f,  1.0f
+	};
+
+
+	GLuint indices[] =
+	{  // Note that we start from 0!
+		0,1,2,3,
+		4,5,6,7,
+		8,9,10,11,
+		12,13,14,15,
+		16,17,18,19,
+		20,21,22,23,
+		24,25,26,27,
+		28,29,30,31,
+		32,33,34,35
+	};
+
+	// Positions all containers
+	glm::vec3 cubePositions[] = {
+		glm::vec3(0.0f,  0.0f,  0.0f),
+		glm::vec3(2.0f,  5.0f, -15.0f),
+		glm::vec3(-1.5f, -2.2f, -2.5f),
+		glm::vec3(-3.8f, -2.0f, -12.3f),
+		glm::vec3(2.4f, -0.4f, -3.5f),
+		glm::vec3(-1.7f,  3.0f, -7.5f),
+		glm::vec3(1.3f, -2.0f, -2.5f),
+		glm::vec3(1.5f,  2.0f, -2.5f),
+		glm::vec3(1.5f,  0.2f, -1.5f),
+		glm::vec3(-1.3f,  1.0f, -1.5f)
+	};
+
+
+	// First, set the container's VAO (and VBO)
+	GLuint VBO, VAO, EBO;
+	glGenVertexArrays(1, &VAO);
+	glGenBuffers(1, &VBO);
+	glGenBuffers(1, &EBO);
+
+	glBindVertexArray(VAO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+	// Position attribute
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)0);
+	glEnableVertexAttribArray(0);
+	// Normals attribute
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
+	glEnableVertexAttribArray(1);
+	// Texture Coordinate attribute
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(6 * sizeof(GLfloat)));
+	glEnableVertexAttribArray(2);
+	glBindVertexArray(0);
+
+	// Then, we set the light's VAO (VBO stays the same. After all, the vertices are the same for the light object (also a 3D cube))
+	GLuint lightVAO;
+	glGenVertexArrays(1, &lightVAO);
+	glBindVertexArray(lightVAO);
+	// We only need to bind to the VBO (to link it with glVertexAttribPointer), no need to fill it; the VBO's data already contains all we need.
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	// Set the vertex attributes (only position data for the lamp))
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)0); // Note that we skip over the other data in our buffer object (we don't need the normals/textures, only positions).
+	glEnableVertexAttribArray(0);
+	glBindVertexArray(0);
+
+
+	//SkyBox
+	GLuint skyboxVBO, skyboxVAO;
+	glGenVertexArrays(1, &skyboxVAO);
+	glGenBuffers(1, &skyboxVBO);
+	glBindVertexArray(skyboxVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, skyboxVBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(skyboxVertices), &skyboxVertices, GL_STATIC_DRAW);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
+
+	// Load textures
+	vector<const GLchar*> faces;
+	faces.push_back("SkyBox/right.tga");
+	faces.push_back("SkyBox/left.tga");
+	faces.push_back("SkyBox/top.tga");
+	faces.push_back("SkyBox/bottom.tga");
+	faces.push_back("SkyBox/back.tga");
+	faces.push_back("SkyBox/front.tga");
+
+	GLuint cubemapTexture = TextureLoading::LoadCubemap(faces);
 
 	glm::mat4 projection = glm::perspective(camera.GetZoom(), (GLfloat)SCREEN_WIDTH / (GLfloat)SCREEN_HEIGHT, 0.1f, 100.0f);
 
@@ -335,32 +551,9 @@ int main()
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		piso_piedra.Draw(lightingShader);
 
-
 		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(-7.0f, 0.0f, 11.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		pasto_nieve.Draw(lightingShader);
-
-		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(10.0f, 0.0f, 11.0f));
-		model = glm::scale(model, glm::vec3(0.5f, 1.0f, 1.0f));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		pasto_nieve.Draw(lightingShader);
-
-		/*model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(11.0f, 0.0f, -3.0f));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		pasto_nieve3.Draw(lightingShader);*/
-
-		/*model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(-4.91f, 0.0f, -9.0f));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		pasto_nieve4.Draw(lightingShader);*/
-
-		/*model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(-12.0f, 0.0f, 0.0f));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		pasto_nieve5.Draw(lightingShader);*/
+		Pasto.Draw(lightingShader);
 
 		model = glm::mat4(1);
 		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
@@ -389,6 +582,46 @@ int main()
 		model = glm::translate(model, glm::vec3(-1.0f, 0.0f, 0.05f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		MesaC.Draw(lightingShader);
+
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(-3.5f, 0.0f, -15.8f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Cama.Draw(lightingShader);
+
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(6.15f, 0.0f, -15.1f));
+		model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Desk.Draw(lightingShader);
+
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(4.5f, 0.0f, -15.0f));
+		model = glm::rotate(model, glm::radians(45.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Silla.Draw(lightingShader);
+
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(6.5f, 1.2f, -14.3f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Lampara.Draw(lightingShader);
+
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(6.6f, 2.5f, -11.5f));
+		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Repisa.Draw(lightingShader);
+
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(6.6f, 3.0f, -12.5f));
+		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Repisa.Draw(lightingShader);
+
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(6.0f, 1.2f, -14.7f));
+		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Libro.Draw(lightingShader);
 
 		model = glm::mat4(1);
 		model = glm::translate(model, glm::vec3(-4.9f, 3.0f, 1.0f));
@@ -547,34 +780,8 @@ int main()
 	
 		//Se cargan las paredes blancas y ventanas
 		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(-7.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		Paredizq.Draw(lightingShader);
-
-		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(7.0f, 0.0f, 0.0f));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		Paredizq.Draw(lightingShader);
-
-		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -6.0f));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		ParedT.Draw(lightingShader);
-
-		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(0.0f, 3.0f, -6.0f));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		Ventana.Draw(lightingShader);
-
-		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(4.0f, 3.0f, -6.0f));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		Ventana.Draw(lightingShader);
-
-		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(-4.0f, 3.0f, -6.0f));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		Ventana.Draw(lightingShader);
+		Paredes.Draw(lightingShader);
 
 		model = glm::mat4(1);
 		model = glm::translate(model, glm::vec3(-4.0f, 3.0f, 6.0f));
@@ -582,14 +789,44 @@ int main()
 		Ventana.Draw(lightingShader);
 
 		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(7.0f, 3.0f, 3.0f));
+		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Ventana.Draw(lightingShader);
+
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(7.0f, 3.0f, -3.0f));
+		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Ventana.Draw(lightingShader);
+
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(7.0f, 3.0f, -9.0f));
+		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Ventana.Draw(lightingShader);
+
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(7.0f, 3.0f, -15.0f));
+		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Ventana.Draw(lightingShader);
+
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(1.0f, 3.0f, -18.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Ventana.Draw(lightingShader);
+
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(-5.0f, 3.0f, -12.0f));
+		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Ventana.Draw(lightingShader);
+
+		model = glm::mat4(1);
 		model = glm::translate(model, glm::vec3(4.0f, 0.0f, 6.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Puerta.Draw(lightingShader);
-
-		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 6.0f));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		ParedF.Draw(lightingShader);
 
 		model = glm::mat4(1);
 		model = glm::translate(model, glm::vec3(4.0f, 5.8f, 0.4f));
@@ -612,6 +849,11 @@ int main()
 		Techo4.Draw(lightingShader);
 
 		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(1.0f, 6.32f, -12.1f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Techo5.Draw(lightingShader);
+
+		model = glm::mat4(1);
 		model = glm::translate(model, glm::vec3(-10.6f, 2.5f, 6.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Columna.Draw(lightingShader);
@@ -620,6 +862,44 @@ int main()
 		model = glm::translate(model, glm::vec3(-10.6f, 2.5f, -5.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Columna.Draw(lightingShader);
+
+		// --------------- TRAILER ----------------------------
+		model = glm::mat4(1);
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Trailer.Draw(lightingShader);
+
+		model = glm::mat4(1);
+		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Llanta1.Draw(lightingShader);
+
+		model = glm::mat4(1);
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Llanta2.Draw(lightingShader);
+
+		model = glm::mat4(1);
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Llanta3.Draw(lightingShader);
+
+		model = glm::mat4(1);
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Llanta4.Draw(lightingShader);
+		//---------------------------------------------
+
+		// -------------- HELICOPTER ---------------------
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(7.0f + mov_cuerpoX, 6.55f + elevar, 0.0f + mov_cuerpoZ));
+		model = glm::rotate(model, glm::radians(rot_cuerpo), glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Cuerpo.Draw(lightingShader);
+
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(7.0f + mov_heliX, 6.55f + elevar, 0.0f + mov_heliZ));
+		model = glm::rotate(model, glm::radians(rot_heli), glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Helice.Draw(lightingShader);
+		// -----------------------------------------
+
 
 		glEnable(GL_BLEND);
     	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -653,6 +933,19 @@ int main()
 		}
 		glBindVertexArray(0);
 
+		glDepthFunc(GL_LEQUAL);  // Change depth function so depth test passes when values are equal to depth buffer's content
+		SkyBoxshader.Use();
+		view = glm::mat4(glm::mat3(camera.GetViewMatrix()));	// Remove any translation component of the view matrix
+		glUniformMatrix4fv(glGetUniformLocation(SkyBoxshader.Program, "view"), 1, GL_FALSE, glm::value_ptr(view));
+		glUniformMatrix4fv(glGetUniformLocation(SkyBoxshader.Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+
+		// skybox cube
+		glBindVertexArray(skyboxVAO);
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+		glBindVertexArray(0);
+		glDepthFunc(GL_LESS); // Set depth function back to default
 
 		// Swap the screen buffers
 		glfwSwapBuffers(window);
@@ -729,8 +1022,8 @@ void DoMovement()
 			}
 			else
 			{
-				girollanta += 0.1f;
-				movz -= 0.01f;;
+				girollanta += 1.0f;
+				movz -= 0.001f;;
 			}
 		}
 
@@ -744,8 +1037,8 @@ void DoMovement()
 			}
 			else
 			{
-				girollanta += 0.1f;
-				movx += 0.01f;
+				girollanta += 1.0f;
+				movx += 0.001f;
 			}
 		}
 
@@ -759,8 +1052,8 @@ void DoMovement()
 			}
 			else
 			{
-				girollanta += 0.1f;
-				movz += 0.01f;
+				girollanta += 1.0f;
+				movz += 0.001f;
 			}
 		}
 
@@ -775,7 +1068,7 @@ void DoMovement()
 			}
 			else
 			{
-				movx -= 0.01f;
+				movx -= 0.001f;
 			}
 		}
 	}
@@ -806,7 +1099,7 @@ void DoMovement()
 			}
 			else
 			{
-				salto += 0.04f;
+				salto += 0.02f;
 				mov_brazo1 -= 1.0f;
 				mov_brazo2 += 1.0f;
 			}
@@ -822,7 +1115,7 @@ void DoMovement()
 			}
 			else 
 			{
-				salto -= 0.04f;
+				salto -= 0.02f;
 				mov_brazo1 += 1.0f;
 				mov_brazo2 -= 1.0f;
 			}
@@ -845,6 +1138,219 @@ void DoMovement()
 		Light4 = glm::vec3(0);
 	}
 	
+	// Animación helicoptero
+	if (animaH)
+	{
+		if (movh1)
+		{
+			if (elevar > 2.0f)
+			{
+				movh1 = false;
+				movh2 = true;
+			}
+			else
+			{
+				elevar += 0.01f;
+				rot_heli += 8.0f;
+			}
+		}
+
+		if (movh2)
+		{
+			if (mov_cuerpoX > 2.0f)
+			{
+				movh2 = false;
+				movh3 = true;
+			}
+			else
+			{
+				mov_cuerpoX += 0.02f;
+				mov_heliX += 0.02f;
+				rot_heli += 8.0f;
+			}
+		}
+		
+		if (movh3)
+		{
+			if (rot_cuerpo < -90.0f)
+			{
+				movh3 = false;
+				movh4 = true;
+			}
+			else
+			{
+				rot_cuerpo -= 1.0f;
+				rot_heli += 8.0f;
+			}
+		}
+
+		if (movh4)
+		{
+			if (mov_cuerpoZ > 9.0f)
+			{
+				movh4 = false;
+				movh5 = true;
+			}
+			else
+			{
+				mov_cuerpoZ += 0.02f;
+				mov_heliZ += 0.02f;
+				rot_heli += 8.0f;
+			}
+		}
+
+		if (movh5)
+		{
+			if (rot_cuerpo < -180.0f) 
+			{
+				movh5 = false;
+				movh6 = true;
+			}
+			else
+			{
+				rot_cuerpo -= 1.0f;
+				rot_heli += 8.0f;
+			}
+		}
+
+		if (movh6)
+		{
+			if (elevar < -4.0f)
+			{
+				movh6 = false;
+				movh7 = true;
+			}
+			else
+			{
+				elevar -= 0.01f;
+				rot_heli += 8.0f;
+			}
+		}
+
+		if (movh7)
+		{
+			if (mov_cuerpoX < -16.0f)
+			{
+				movh7 = false;
+				movh8 = true;
+			}
+			else
+			{
+				mov_cuerpoX -= 0.02f;
+				mov_heliX -= 0.02f;
+				rot_heli += 8.0f;
+			}
+		}
+
+		if (movh8)
+		{
+			if (rot_cuerpo < -270.0f)
+			{
+				movh8 = false;
+				movh9 = true;
+			}
+			else
+			{
+				rot_cuerpo -= 1.0f;
+				rot_heli += 8.0f;
+			}
+		}
+
+		if (movh9)
+		{
+			if (mov_cuerpoZ < -8.0f)
+			{
+				movh9 = false;
+				movh10 = true;
+			}
+			else
+			{
+				mov_cuerpoZ -= 0.02f;
+				mov_heliZ -= 0.02f;
+				rot_heli += 8.0f;
+			}
+		}
+
+		if (movh10)
+		{
+			if (rot_cuerpo < -395.0f)
+			{
+				movh10 = false;
+				movh11 = true;
+			}
+			else
+			{
+				rot_cuerpo -= 1.0f;
+				rot_heli += 8.0f;
+			}
+		}
+
+		if (movh11)
+		{
+			if (elevar > 1.99f)
+			{
+				movh11 = false;
+				movh12 = true;
+			}
+			else
+			{
+				elevar += 0.01f;
+				rot_heli += 5.0f;
+			}
+		}
+
+		if (movh12)
+		{
+			if (mov_cuerpoX > -8.05f)
+			{
+				movh12 = false;
+				movh13 = true;
+			}
+			else
+			{
+				mov_cuerpoX += 0.02f;
+				mov_cuerpoZ += 0.02f;
+				mov_heliX += 0.02f;
+				mov_heliZ += 0.02f;
+				rot_heli += 5.0f;
+			}
+		}
+
+		if (movh13)
+		{
+			if (rot_cuerpo > -360.0f)
+			{
+				movh13 = false;
+				movh14 = true;
+			}
+			else
+			{
+				rot_cuerpo += 1.0f;
+				rot_heli += 5.0f;
+			}
+		}
+		
+		if (movh14)
+		{
+			if (mov_cuerpoX > 0.0f)
+			{
+				movh14 = false;
+				rot_cuerpo = 0.0f;
+				mov_cuerpoX = 0.0f;
+				mov_cuerpoZ = 0.0f;
+				mov_heliX = 0.0f;
+				mov_heliZ = 0.0f;
+				rot_heli = 0.0f;
+				movh2 = true;
+			}
+			else
+			{
+				mov_cuerpoX += 0.02f;
+				mov_heliX += 0.02f;
+				rot_heli += 5.0f;
+			}
+		}
+	}
 }
 
 // Is called whenever a key is pressed/released via GLFW
@@ -883,6 +1389,11 @@ void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mode
 	if (keys[GLFW_KEY_N])
 	{
 		animaSnow = !animaSnow;
+	}
+
+	if (keys[GLFW_KEY_H])
+	{
+		animaH = !animaH;
 	}
 
 }
