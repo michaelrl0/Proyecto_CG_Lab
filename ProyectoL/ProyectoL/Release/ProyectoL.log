@@ -1,16 +1,26 @@
 ﻿  314069494_PROYECTO_GPO12.cpp
-C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(421,24): warning C4244: 'inicializando': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(419,24): warning C4244: 'inicializando': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(448,21): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(449,21): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
 C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(450,21): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
           with
           [
               T=float
           ]
-C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(451,21): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(454,22): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
           with
           [
               T=float
           ]
-C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(452,21): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(455,22): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
           with
           [
               T=float
@@ -20,12 +30,12 @@ C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto
           [
               T=float
           ]
-C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(457,22): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(460,22): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
           with
           [
               T=float
           ]
-C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(458,22): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(461,22): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
           with
           [
               T=float
@@ -35,12 +45,12 @@ C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto
           [
               T=float
           ]
-C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(463,22): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(466,22): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
           with
           [
               T=float
           ]
-C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(464,22): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(467,22): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
           with
           [
               T=float
@@ -50,30 +60,20 @@ C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto
           [
               T=float
           ]
-C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(469,22): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
-          with
-          [
-              T=float
-          ]
-C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(470,22): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
-          with
-          [
-              T=float
-          ]
-C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(979,17): warning C4305: '+=': truncamiento de 'double' a 'float'
-C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(985,17): warning C4305: '-=': truncamiento de 'double' a 'float'
-C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(991,27): warning C4305: '+=': truncamiento de 'double' a 'float'
-C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(997,21): warning C4305: '-=': truncamiento de 'double' a 'float'
-C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(1415,11): warning C4244: '=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(1416,11): warning C4244: '=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(1420,18): warning C4244: 'inicializando': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(1421,18): warning C4244: 'inicializando': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(1423,10): warning C4244: '=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(1424,10): warning C4244: '=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(941,17): warning C4305: '+=': truncamiento de 'double' a 'float'
+C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(947,17): warning C4305: '-=': truncamiento de 'double' a 'float'
+C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(953,27): warning C4305: '+=': truncamiento de 'double' a 'float'
+C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(959,21): warning C4305: '-=': truncamiento de 'double' a 'float'
+C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(1377,11): warning C4244: '=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(1378,11): warning C4244: '=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(1382,18): warning C4244: 'inicializando': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(1383,18): warning C4244: 'inicializando': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(1385,10): warning C4244: '=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(1386,10): warning C4244: '=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
 soil2-debug.lib(SOIL2.obj) : warning LNK4075: se omite '/EDITANDCONTINUE' debido a la especificación '/OPT:ICF'
 LINK : warning LNK4098: la biblioteca predeterminada'MSVCRTD' entra en conflicto con otras bibliotecas; use la biblioteca /NODEFAULTLIB:biblioteca
   Generando código
-  2 of 698 functions ( 0.3%) were compiled, the rest were copied from previous compilation.
+  1 of 697 functions ( 0.1%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
     0 functions had inline decision re-evaluated but remain unchanged
   Generación de código finalizada

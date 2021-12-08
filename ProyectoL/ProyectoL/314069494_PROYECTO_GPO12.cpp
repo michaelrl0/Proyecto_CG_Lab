@@ -216,13 +216,11 @@ int main()
 	Model brazo2((char*)"Models/Snowman/brazo2.obj");
 
 	//Carro
-	Model carroceria((char*)"Models/Carro/carroceria.obj");
-	Model llanta((char*)"Models/Carro/llanta.obj");
+	Model carroceria((char*)"Models/Carro/coche.obj");
+
 	Model Trailer((char*)"Models/Trailer/trailer.obj");
-	Model Llanta1((char*)"Models/Trailer/llanta1.obj");
-	Model Llanta2((char*)"Models/Trailer/llanta2.obj");
-	Model Llanta3((char*)"Models/Trailer/llanta3.obj");
-	Model Llanta4((char*)"Models/Trailer/llanta4.obj");
+	Model Llanta1((char*)"Models/Trailer/llanta.obj");
+	Model Llanta2((char*)"Models/Trailer/llantaD.obj");
 
 	// helicoptero
 	Model Cuerpo((char*)"Models/Helicopter/cuerpo.obj");
@@ -429,8 +427,8 @@ int main()
 		// Clear the colorbuffer
 		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	    //Load Model
-	
+		//Load Model
+
 
 		// Use cooresponding shader when setting uniforms/drawing objects
 		lightingShader.Use();
@@ -446,7 +444,7 @@ int main()
 
 
 		// Point light 1: Luz azul
-	    glm::vec3 lightColor;
+		glm::vec3 lightColor;
 		lightColor.x = abs(sin(glfwGetTime() * Light1.x));
 		lightColor.y = abs(sin(glfwGetTime() * Light1.y));
 		lightColor.z = sin(glfwGetTime() * Light1.z);
@@ -486,7 +484,7 @@ int main()
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[1].constant"), 1.0f);
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[1].linear"), 0.02f);
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[1].quadratic"), 8.0f);
-		
+
 		// Point light 3
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[2].position"), pointLightPositions[2].x, pointLightPositions[2].y, pointLightPositions[2].z);
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[2].ambient"), lightColor3.x, lightColor3.y, lightColor3.z);
@@ -510,7 +508,7 @@ int main()
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "spotLight.direction"), direccionSP.x, direccionSP.y, direccionSP.z);
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "spotLight.ambient"), 0.0f, 0.0f, 0.0f);
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "spotLight.diffuse"), 0.0f, 0.0f, 0.0f);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "spotLight.specular"),0.0f, 0.0f, 0.0f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "spotLight.specular"), 0.0f, 0.0f, 0.0f);
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "spotLight.constant"), 1.0f);
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "spotLight.linear"), 0.0f);
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "spotLight.quadratic"), 0.0f);
@@ -533,14 +531,14 @@ int main()
 		// Pass the matrices to the shader
 		//glUniformMatrix4fv(glGetUniformLocation(shader.Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 		//glUniformMatrix4fv(glGetUniformLocation(shader.Program, "view"), 1, GL_FALSE, glm::value_ptr(view));
-		
+
 		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
 		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
 
 		glm::mat4 model(1);
 
 		//SE CARGAN LOS MODELOS
-        view = camera.GetViewMatrix();	
+		view = camera.GetViewMatrix();
 		model = glm::mat4(1);
 		model = glm::scale(model, glm::vec3(1.0f, 0.01f, 1.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
@@ -571,7 +569,7 @@ int main()
 		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Sofa.Draw(lightingShader);
-		
+
 		model = glm::mat4(1);
 		model = glm::translate(model, glm::vec3(-3.5f, 0.0f, -3.5f));
 		model = glm::rotate(model, glm::radians(25.0f), glm::vec3(0.0f, 1.0f, 0.0f));
@@ -706,78 +704,44 @@ int main()
 		baston.Draw(lightingShader);
 		//******************************************************
 
-		//Snowman
+		// ------------------ SNOWMAN ---------------------
 		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f+salto, 12.0f));
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f + salto, 12.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		cuerpo.Draw(lightingShader);
 
 		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(0.0f, 1.3f+salto, 12.0f));
+		model = glm::translate(model, glm::vec3(0.0f, 1.3f + salto, 12.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		cabeza.Draw(lightingShader);
 
 		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(0.0f, 2.05f+salto, 12.0f));
+		model = glm::translate(model, glm::vec3(0.0f, 2.05f + salto, 12.0f));
 		//model = glm::rotate(model, glm::radians(-60.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		sombrero.Draw(lightingShader);
 
 		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(0.5f, 1.0f+salto, 12.0f));
+		model = glm::translate(model, glm::vec3(0.5f, 1.0f + salto, 12.0f));
 		model = glm::rotate(model, glm::radians(mov_brazo1), glm::vec3(0.0f, 0.0f, 1.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		brazo1.Draw(lightingShader);
 
 		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(-0.5f, 1.0f+salto, 12.0f));
+		model = glm::translate(model, glm::vec3(-0.5f, 1.0f + salto, 12.0f));
 		model = glm::rotate(model, glm::radians(mov_brazo2), glm::vec3(0.0f, 0.0f, 1.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		brazo2.Draw(lightingShader);
-		//*********************************************
-		
+
 		// carro
 		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(-4.0f+movx, 0.0f, 3.0f+movz));
-		model = glm::rotate(model, glm::radians(rotacioncarro), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(6.5f, 2.57f, -11.5f));
+		model = glm::rotate(model, glm::radians(45.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		carroceria.Draw(lightingShader);
 
-		// llanta derecha delantera
-		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(-3.936f+movx, 0.0f, 2.9f+movz));
-		model = glm::rotate(model, glm::radians(rotacioncarro), glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::rotate(model, glm::radians(girollanta), glm::vec3(1.0f, 0.0f, 0.0f));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		llanta.Draw(lightingShader);
-		
-		// llanta izq delantera
-		model = glm::mat4(1);
-		//model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::translate(model, glm::vec3(-4.059f+movx, 0.0f, 2.9f+movz));
-		model = glm::rotate(model, glm::radians(rotacioncarro), glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::rotate(model, glm::radians(girollanta), glm::vec3(1.0f, 0.0f, 0.0f));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		llanta.Draw(lightingShader);
-		
-		// llanta derecha trasera
-		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(-3.936f+movx, 0.0f, 3.108+movz));
-		model = glm::rotate(model, glm::radians(rotacioncarro), glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::rotate(model, glm::radians(girollanta), glm::vec3(1.0f, 0.0f, 0.0f));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		llanta.Draw(lightingShader);
-		
-		// llanta izq trasera
-		model = glm::mat4(1);
-		//model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::translate(model, glm::vec3(-4.063f+movx, 0.0f, 3.108f+movz));
-		model = glm::rotate(model, glm::radians(rotacioncarro), glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::rotate(model, glm::radians(girollanta), glm::vec3(1.0f, 0.0f, 0.0f));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		llanta.Draw(lightingShader);
 		//------------------------------------------------------------------
-	
+
 		//Se cargan las paredes blancas y ventanas
 		model = glm::mat4(1);
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
@@ -867,23 +831,31 @@ int main()
 		model = glm::mat4(1);
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Trailer.Draw(lightingShader);
-
+		// llantas delanteras
+		// derecha
 		model = glm::mat4(1);
-		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+		model = glm::translate(model, glm::vec3(0.042f, 0.024f, -0.063f));
+		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Llanta1.Draw(lightingShader);
-
+		// izq
 		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(-0.057f, 0.024f, -0.063f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Llanta1.Draw(lightingShader);
+		// llantas traseras
+		// derecha
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(-0.043f, 0.023f, 0.095f));
+		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Llanta2.Draw(lightingShader);
+		// izq
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(0.047f, 0.023f, 0.095f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Llanta2.Draw(lightingShader);
 
-		model = glm::mat4(1);
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		Llanta3.Draw(lightingShader);
-
-		model = glm::mat4(1);
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		Llanta4.Draw(lightingShader);
 		//---------------------------------------------
 
 		// -------------- HELICOPTER ---------------------
