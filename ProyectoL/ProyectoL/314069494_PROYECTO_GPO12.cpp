@@ -54,18 +54,18 @@ estrella;
 
 float contador = 0.0f;
 
-// Variables para animación de carrito
+// Variables para animación del traíler
 bool animaCarro = false,
 recorrido1 = true,
 recorrido2 = false,
 recorrido3 = false,
 recorrido4 = false;
 
-float posicion = 0.0f,
+float movt_X = 0.0f,
+movt_Z = 0.0f,
 girollanta = 0.0f,
-rotacioncarro = 0.0f,
-movx = 0.0f,
-movz = 0.0f;
+rotacion_tX = 0.0f,
+rotacion_tY = 0.0f;
 
 // Variables para animación del snowman
 bool animaSnow = false,
@@ -829,30 +829,37 @@ int main()
 
 		// --------------- TRAILER ----------------------------
 		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(-4.0f + movt_X, 0.0f, 3.0f + movt_Z));
+		model = glm::rotate(model, glm::radians(rotacion_tX), glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(rotacion_tY), glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Trailer.Draw(lightingShader);
 		// llantas delanteras
 		// derecha
 		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(0.042f, 0.024f, -0.063f));
+		model = glm::translate(model, glm::vec3(-3.945f + movt_X, 0.024f, 2.945f + movt_Z));
 		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(girollanta), glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Llanta1.Draw(lightingShader);
 		// izq
 		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(-0.057f, 0.024f, -0.063f));
+		model = glm::translate(model, glm::vec3(-4.053f + movt_X, 0.024f, 2.945f + movt_Z));
+		model = glm::rotate(model, glm::radians(girollanta), glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Llanta1.Draw(lightingShader);
 		// llantas traseras
 		// derecha
 		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(-0.043f, 0.023f, 0.095f));
-		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(-3.954f + movt_X, 0.023f, 3.094f + movt_Z));
+		model = glm::rotate(model, glm::radians(girollanta), glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Llanta2.Draw(lightingShader);
 		// izq
 		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(0.047f, 0.023f, 0.095f));
+		model = glm::translate(model, glm::vec3(-4.051f + movt_X, 0.023f, 3.094f + movt_Z));
+		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(girollanta), glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Llanta2.Draw(lightingShader);
 
@@ -986,63 +993,45 @@ void DoMovement()
 	{
 		if (recorrido1)
 		{
-			if (movz < -6.5f)
+			if (movt_Z < -8.77f)
 			{
 				recorrido1 = false;
 				recorrido2 = true;
-				rotacioncarro = -90.0f;
 			}
 			else
 			{
-				girollanta += 1.0f;
-				movz -= 0.001f;;
+				movt_Z -= 0.01f;
+				girollanta += 5.0f;
 			}
 		}
 
 		if (recorrido2)
 		{
-			if (movx > 9.0f)
+			if (rotacion_tX < -10.0f)
 			{
 				recorrido2 = false;
 				recorrido3 = true;
-				rotacioncarro = -180.0f;
 			}
 			else
 			{
-				girollanta += 1.0f;
-				movx += 0.001f;
+				rotacion_tX -= 1.0f;
 			}
 		}
 
 		if (recorrido3)
 		{
-			if (movz > 0.5f)
+			if (rotacion_tX > 0.0f)
 			{
 				recorrido3 = false;
 				recorrido4 = true;
-				rotacioncarro = -270.0f;
 			}
 			else
 			{
-				girollanta += 1.0f;
-				movz += 0.001f;
+				rotacion_tX += 1.0f;
 			}
 		}
 
-
-		if (recorrido4)
-		{
-			if (movx < -0.05f)
-			{
-				recorrido4 = false;
-				recorrido1 = true;
-				rotacioncarro = -360.0f;
-			}
-			else
-			{
-				movx -= 0.001f;
-			}
-		}
+		
 	}
 
 	if (animaSnow)

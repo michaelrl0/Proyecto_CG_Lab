@@ -60,16 +60,16 @@ C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto
           [
               T=float
           ]
-C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(941,17): warning C4305: '+=': truncamiento de 'double' a 'float'
-C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(947,17): warning C4305: '-=': truncamiento de 'double' a 'float'
-C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(953,27): warning C4305: '+=': truncamiento de 'double' a 'float'
-C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(959,21): warning C4305: '-=': truncamiento de 'double' a 'float'
-C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(1377,11): warning C4244: '=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(1378,11): warning C4244: '=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(1382,18): warning C4244: 'inicializando': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(1383,18): warning C4244: 'inicializando': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(1385,10): warning C4244: '=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(1386,10): warning C4244: '=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(948,17): warning C4305: '+=': truncamiento de 'double' a 'float'
+C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(954,17): warning C4305: '-=': truncamiento de 'double' a 'float'
+C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(960,27): warning C4305: '+=': truncamiento de 'double' a 'float'
+C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(966,21): warning C4305: '-=': truncamiento de 'double' a 'float'
+C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(1366,11): warning C4244: '=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(1367,11): warning C4244: '=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(1371,18): warning C4244: 'inicializando': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(1372,18): warning C4244: 'inicializando': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(1374,10): warning C4244: '=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\maina\Documents\SEMESTRE 2\COMPU GRAFICA\PROYECTO\Proyecto LAB\Proyecto_CG_Lab\ProyectoL\ProyectoL\314069494_PROYECTO_GPO12.cpp(1375,10): warning C4244: '=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
 soil2-debug.lib(SOIL2.obj) : warning LNK4075: se omite '/EDITANDCONTINUE' debido a la especificación '/OPT:ICF'
 LINK : warning LNK4098: la biblioteca predeterminada'MSVCRTD' entra en conflicto con otras bibliotecas; use la biblioteca /NODEFAULTLIB:biblioteca
   Generando código
