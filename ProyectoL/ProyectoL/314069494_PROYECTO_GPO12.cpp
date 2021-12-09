@@ -59,13 +59,22 @@ bool animaCarro = false,
 recorrido1 = true,
 recorrido2 = false,
 recorrido3 = false,
-recorrido4 = false;
+recorrido4 = false,
+recorrido5 = false,
+recorrido6 = false,
+recorrido7 = false;
 
 float movt_X = 0.0f,
 movt_Z = 0.0f,
 girollanta = 0.0f,
 rotacion_tX = 0.0f,
-rotacion_tY = 0.0f;
+movL_Z1 = 0.0f,
+movL_Z2 = 0.0f,
+movL_X1 = 0.0f,
+movL_X2 = 0.0f,
+rot_L1 = 0.0f,
+rot_L2 = 0.0f,
+rot_L2_1 = 0.0f;
 
 // Variables para animación del snowman
 bool animaSnow = false,
@@ -831,7 +840,6 @@ int main()
 		model = glm::mat4(1);
 		model = glm::translate(model, glm::vec3(-4.0f + movt_X, 0.0f, 3.0f + movt_Z));
 		model = glm::rotate(model, glm::radians(rotacion_tX), glm::vec3(1.0f, 0.0f, 0.0f));
-		model = glm::rotate(model, glm::radians(rotacion_tY), glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Trailer.Draw(lightingShader);
 		// llantas delanteras
@@ -851,14 +859,17 @@ int main()
 		// llantas traseras
 		// derecha
 		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(-3.954f + movt_X, 0.023f, 3.094f + movt_Z));
+		model = glm::translate(model, glm::vec3(-3.954f + movL_X1, 0.023f, 3.094f + movL_Z1));
+		model = glm::rotate(model, glm::radians(rot_L1), glm::vec3(0.0f, 1.0f, 0.0f));
 		model = glm::rotate(model, glm::radians(girollanta), glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Llanta2.Draw(lightingShader);
 		// izq
 		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(-4.051f + movt_X, 0.023f, 3.094f + movt_Z));
+		model = glm::translate(model, glm::vec3(-4.051f + movL_X2, 0.023f, 3.094f + movL_Z2));
 		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(rot_L2), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(rot_L2_1), glm::vec3(0.0f, 0.0f, 1.0f));
 		model = glm::rotate(model, glm::radians(girollanta), glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Llanta2.Draw(lightingShader);
@@ -988,9 +999,10 @@ void DoMovement()
 		camera.ProcessKeyboard(RIGHT, deltaTime);
 	}
 
-	//Animación para el carro
+	//Animación del tráiler
 	if (animaCarro)
 	{
+		// Avanza hacia adelante
 		if (recorrido1)
 		{
 			if (movt_Z < -8.77f)
@@ -1001,10 +1013,12 @@ void DoMovement()
 			else
 			{
 				movt_Z -= 0.01f;
+				movL_Z1 -= 0.01f;
+				movL_Z2 -= 0.01f;
 				girollanta += 5.0f;
 			}
 		}
-
+		// Choque con la pared
 		if (recorrido2)
 		{
 			if (rotacion_tX < -10.0f)
@@ -1020,7 +1034,7 @@ void DoMovement()
 
 		if (recorrido3)
 		{
-			if (rotacion_tX > 0.0f)
+			if (rotacion_tX > 5.0f)
 			{
 				recorrido3 = false;
 				recorrido4 = true;
@@ -1030,8 +1044,51 @@ void DoMovement()
 				rotacion_tX += 1.0f;
 			}
 		}
+		// Se despegan las llantas traseras y avanzan hacia adelante hasta chocar con pared
+		if (recorrido4)
+		{
+			if (movL_Z1 < -8.97f)
+			{
+				recorrido4 = false;
+				recorrido5 = true;
+				recorrido6 = true;
+			}
+			else
+			{
+				rot_L1 = -30.0f;
+				rot_L2 = 30.0f;
+				movL_Z1 -= 0.001f;
+				movL_Z2 -= 0.001f;
+				movL_X1 += 0.001f;
+				movL_X2 -= 0.001f;
+			}
+		}
+		// La llanta derecha solo restrocede un poco despues de tocar la pared
+		if (recorrido5)
+		{
+			if (movL_Z1 > -8.9f)
+			{
+				recorrido5 = false;
+			}
+			else
+			{
+				movL_Z1 += 0.0005f;
+				movL_X1 -= 0.0005f;
+			}
+		}
+		// La llanta izq se cae de lado 
+		if (recorrido6)
+		{
+			if (rot_L2_1 > 89.0f)
+			{
+				recorrido6 = false;
+			}
+			else
+			{
+				rot_L2_1 += 15.0f;
+			}
+		}
 
-		
 	}
 
 	if (animaSnow)
