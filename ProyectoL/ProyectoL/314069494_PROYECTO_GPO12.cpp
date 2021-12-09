@@ -1,5 +1,7 @@
 #include <iostream>
 #include <cmath>
+#include <ctime>
+#include <time.h>
 
 // GLEW
 #include <GL/glew.h>
@@ -112,12 +114,28 @@ mov_cuerpoZ = 0.0f,
 mov_heliX = 0.0f,
 mov_heliZ = 0.0f;
 
-// Posiciones para las luces del arbol
+// Variables para luces de bastones
+bool animaB = false,
+rec1 = true,
+rec2 = false;
+
+float posA = 0.0f,
+posB = 0.0f;
+
+int seg = 1.0f;
+
+// Posiciones para las luces del arbol y bastones
 glm::vec3 pointLightPositions[] = {
+	//esferas
 	glm::vec3(-4.159f, 1.064f, 4.362f),
 	glm::vec3(-4.438f, 1.156f, 3.272f),
 	glm::vec3(-4.554f, 2.203f, 4.208f),
-	glm::vec3(-5.015f, 3.167f, 4.313f)
+	glm::vec3(-4.864f, 3.196f, 3.853f),
+	glm::vec3(-4.848f, 3.488f, 4.018f),
+	// bastones
+	glm::vec3(2.5f, 0.0f, 7.029f),
+	glm::vec3(5.5f, 0.0f, 7.029f),
+
 };
 
 glm::vec3 Light1 = glm::vec3(0);
@@ -125,6 +143,9 @@ glm::vec3 Light1 = glm::vec3(0);
 glm::vec3 Light2 = glm::vec3(0);
 glm::vec3 Light3 = glm::vec3(0);
 glm::vec3 Light4 = glm::vec3(0);
+glm::vec3 Light5 = glm::vec3(0);
+
+glm::vec3 Light6 = glm::vec3(0);
 
 // Posición de la spotlight
 glm::vec3 posicionSP = glm::vec3(0);
@@ -135,6 +156,11 @@ glm::vec3 direccionSP = glm::vec3(0);
 // Deltatime
 GLfloat deltaTime = 0.0f;	// Time between current frame and last frame
 GLfloat lastFrame = 0.0f;  	// Time of last frame
+
+// Función para obtener un delay en las luces de los bastones
+void delay(int segundos) {
+	for (int a = (time(NULL) + segundos); time(NULL) != a; time(NULL));
+}
 
 int main()
 {
@@ -476,6 +502,18 @@ int main()
 		lightColor4.y = abs(sin(glfwGetTime() * Light4.y));
 		lightColor4.z = sin(glfwGetTime() * Light4.z);
 
+		// Point light 5: Luz azul
+		glm::vec3 lightColor5;
+		lightColor5.x = abs(sin(glfwGetTime() * Light5.x));
+		lightColor5.y = abs(sin(glfwGetTime() * Light5.y));
+		lightColor5.z = sin(glfwGetTime() * Light5.z);
+
+		// Pint light movible A
+		glm::vec3 lightColor6;
+		lightColor6.x = abs(sin(glfwGetTime() * Light6.x));
+		lightColor6.y = abs(sin(glfwGetTime() * Light6.y));
+		lightColor6.z = sin(glfwGetTime() * Light6.z);
+
 		// Point Light 1
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[0].position"), pointLightPositions[0].x, pointLightPositions[0].y, pointLightPositions[0].z);
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[0].ambient"), lightColor.x, lightColor.y, lightColor.z);
@@ -511,6 +549,24 @@ int main()
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[3].constant"), 1.0f);
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[3].linear"), 0.02f);
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[3].quadratic"), 8.0f);
+
+		// Point light 5
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[3].position"), pointLightPositions[4].x, pointLightPositions[4].y, pointLightPositions[4].z);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[3].ambient"), lightColor5.x, lightColor5.y, lightColor5.z);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[3].diffuse"), lightColor5.x, lightColor5.y, lightColor5.z);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[3].specular"), 0.0f, 0.2f, 0.0f);
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[3].constant"), 1.0f);
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[3].linear"), 0.02f);
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[3].quadratic"), 8.0f);
+
+		// Point light 6
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[0].position"), pointLightPositions[5].x, pointLightPositions[5].y, pointLightPositions[5].z + posA);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[0].ambient"), 1.0f, 1.0f, 0.0f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[0].diffuse"), 1.0f, 1.0f, 0.0f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[0].specular"), 0.2f, 0.2f, 0.2f);
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[0].constant"), 1.0f);
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[0].linear"), 0.2f);
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[0].quadratic"), 8.0f);
 
 		// SpotLight
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "spotLight.position"), posicionSP.x, posicionSP.y, posicionSP.z);
@@ -652,11 +708,6 @@ int main()
 		baston.Draw(lightingShader);
 
 		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(2.5f, 0.0f, 7.029f));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		baston.Draw(lightingShader);
-
-		model = glm::mat4(1);
 		model = glm::translate(model, glm::vec3(2.5f, 0.0f, 9.029f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		baston.Draw(lightingShader);
@@ -676,12 +727,6 @@ int main()
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		baston.Draw(lightingShader);
 		//----------------------
-		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(5.5f, 0.0f, 7.029f));
-		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		baston.Draw(lightingShader);
-
 		model = glm::mat4(1);
 		model = glm::translate(model, glm::vec3(5.5f, 0.0f, 7.029f));
 		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
@@ -1089,6 +1134,7 @@ void DoMovement()
 			}
 		}
 
+
 	}
 
 	if (animaSnow)
@@ -1143,10 +1189,11 @@ void DoMovement()
 	// Luz azul
 	if (esfera1)
 	{
-		Light1 = glm::vec3(0.0f, 0.0f, 0.7f);
+		Light1 = glm::vec3(0.0f, 0.0f, 0.8f);
 		Light2 = glm::vec3(0.0f, 0.7f, 0.0f);
 		Light3 = glm::vec3(0.7f, 0.7f, 0.0f);
 		Light4 = glm::vec3(0.7f, 0.0f, 0.0f);
+		Light5 = glm::vec3(0.0f, 0.0f, 0.7f);
 	}
 	else
 	{
@@ -1154,6 +1201,7 @@ void DoMovement()
 		Light2 = glm::vec3(0);
 		Light3 = glm::vec3(0);
 		Light4 = glm::vec3(0);
+		Light5 = glm::vec3(0);
 	}
 	
 	// Animación helicoptero
@@ -1369,6 +1417,44 @@ void DoMovement()
 			}
 		}
 	}
+
+	// Animación en las luces de los bastones
+	if (animaB)
+	{
+		Light6 = glm::vec3(0.7f, 0.7f, 0.7f);
+		if (rec1)
+		{
+			if (posA > 8.0f)
+			{
+				rec1 = false;
+				rec2 = true;
+			}
+			else
+			{
+				delay(seg);
+				posA += 2.0f;
+			}
+		}
+
+		if (rec2)
+		{
+			if (posA < 0.0f)
+			{
+				rec2 = false;
+				rec1 = true;
+			}
+			else
+			{
+				delay(seg);
+				posA -= 2.0f;
+			}
+		}
+		
+	}
+	else
+	{
+		Light6 = glm::vec3(0.0f);
+	}
 }
 
 // Is called whenever a key is pressed/released via GLFW
@@ -1412,6 +1498,11 @@ void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mode
 	if (keys[GLFW_KEY_H])
 	{
 		animaH = !animaH;
+	}
+
+	if (keys[GLFW_KEY_B])
+	{
+		animaB = !animaB;
 	}
 
 }
